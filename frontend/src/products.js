@@ -1,0 +1,52 @@
+let products = [
+  {
+    '_id': '1',
+    'name': 'product1',
+    'image': '/images/product1.jpg',
+    'description': 'Bluetooth technology lets you connect it with compatible devices wirelessly',
+    'brand': 'Apple',
+    'category': 'Electronics',
+    'price': 89.99,
+    'countInStock': 10,
+    'rating': 4.5,
+    'numReviews': 12,
+  },
+  {
+    '_id': '2',
+    'name': 'product2',
+    'image': '/images/product2.jpg',
+    'description': 'Bluetooth technology lets you connect it with compatible devices wirelessly',
+    'brand': 'Apple',
+    'category': 'Electronics',
+    'price': 39.99,
+    'countInStock': 10,
+    'rating': 4,
+    'numReviews': 23,
+  },
+  {
+    '_id': '3',
+    'name': 'product3',
+    'image': '/images/product3.jpg',
+    'description': 'Bluetooth technology lets you connect it with compatible devices wirelessly',
+    'brand': 'Apple',
+    'category': 'Electronics',
+    'price': 59.99,
+    'countInStock': 10,
+    'rating': 4.5,
+    'numReviews': 3,
+  },
+  {
+    '_id': '4',
+    'name': 'product4',
+    'image': '/images/product4.jpg',
+    'description': 'Bluetooth technology lets you connect it with compatible devices wirelessly',
+    'brand': 'Apple',
+    'category': 'Electronics',
+    'price': 9.99,
+    'countInStock': 10,
+    'rating': 2.7,
+    'numReviews': 212,
+  }
+]
+
+export default products
