@@ -1,13 +1,12 @@
-import React from 'react'
-import { Navbar, Container, Nav } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import React from "react";
+import { Navbar, Container, Nav } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 function Header() {
   return (
-
     <header>
       <Navbar expand="lg" bg="light" variant="light" collapseOnSelect>
-        <Container fluid>
+        <Container>
           <LinkContainer to="/">
             <Navbar.Brand>TechnoMark</Navbar.Brand>
           </LinkContainer>
@@ -15,22 +14,25 @@ function Header() {
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="mr-auto my-2 my-lg-0"
-              style={{ maxHeight: '100px' }}
+              style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <LinkContainer to='/cart'>
-                <Nav.Link><i className="fas fa-shopping-cart"></i>Cart</Nav.Link>
+              <LinkContainer to="/cart">
+                <Nav.Link>
+                  <i className="fas fa-shopping-cart"></i>Cart
+                </Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/login'>
-                <Nav.Link><i className="fas fa-user"></i>Login</Nav.Link>
+              <LinkContainer to="/login">
+                <Nav.Link>
+                  <i className="fas fa-user"></i>Login
+                </Nav.Link>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
     </header>
-
-  )
+  );
 }
 
-export default Header
+export default Header;
