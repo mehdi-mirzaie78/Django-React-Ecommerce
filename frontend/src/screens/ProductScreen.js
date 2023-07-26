@@ -22,10 +22,10 @@ function ProductScreen() {
         Go Back
       </Link>
       <Row>
-        <Col md={6}>
+        <Col md={5}>
           <Image src={product.image} alt={product.name} fluid rounded />
         </Col>
-        <Col md={3}>
+        <Col md={4}>
           <ListGroup variant="flush" className="rounded">
             <ListGroup.Item className="border">
               <h3>{product.name}</h3>
