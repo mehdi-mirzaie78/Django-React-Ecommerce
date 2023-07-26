@@ -12,11 +12,11 @@ class Product(models.Model):
     description = models.TextField(null=True, blank=True)
     rating = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
-    num_reviews = models.IntegerField(null=True, blank=True, default=0)
+    numReviews = models.IntegerField(null=True, blank=True, default=0)
     price = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
-    count_in_stock = models.IntegerField(null=True, blank=True, default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
+    countInStock = models.IntegerField(null=True, blank=True, default=0)
+    createdAt = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
@@ -40,18 +40,18 @@ class Review(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, related_name="orders", null=True)
-    payment_method = models.CharField(max_length=200, null=True, blank=True)
-    tax_price = models.DecimalField(
+    paymentMethod = models.CharField(max_length=200, null=True, blank=True)
+    taxPrice = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
-    shipping_price = models.DecimalField(
+    shippingPrice = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
-    total_price = models.DecimalField(
+    totalPrice = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
-    is_paid = models.BooleanField(default=False)
-    paid_at = models.DateTimeField(null=True, blank=True)
-    is_delivered = models.BooleanField(default=False)
-    delivered_at = models.DateTimeField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    isPaid = models.BooleanField(default=False)
+    paidAt = models.DateTimeField(null=True, blank=True)
+    isDelivered = models.BooleanField(default=False)
+    deliveredAt = models.DateTimeField(null=True, blank=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self) -> str:
@@ -78,9 +78,9 @@ class ShippingAddress(models.Model):
         Order, on_delete=models.CASCADE, null=True, blank=True)
     address = models.CharField(max_length=200, null=True, blank=True)
     city = models.CharField(max_length=200, null=True, blank=True)
-    postal_code = models.CharField(max_length=200, null=True, blank=True)
+    postalCode = models.CharField(max_length=200, null=True, blank=True)
     country = models.CharField(max_length=200, null=True, blank=True)
-    shipping_price = models.DecimalField(
+    shippingPrice = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
     _id = models.AutoField(primary_key=True, editable=False)
 
