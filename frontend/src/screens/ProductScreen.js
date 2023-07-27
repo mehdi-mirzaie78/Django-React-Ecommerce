@@ -14,7 +14,7 @@ function ProductScreen() {
       setProduct(data);
     }
     fetchProduct();
-  }, []);
+  });
 
   return (
     <div>
