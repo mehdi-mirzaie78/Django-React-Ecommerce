@@ -9,14 +9,14 @@ from .serializers import ProductSerializer
 class RouteList(APIView):
     def get(self, request):
         routes = [
-            'api/products/',
-            'api/products/create/',
-            'api/products/upload/',
-            'api/products/<id>/reviews/',
-            'api/products/top/',
-            'api/products/<id>/',
-            'api/products/delete/<id>/',
-            'api/products/update/<id>/',
+            "api/products/",
+            "api/products/create/",
+            "api/products/upload/",
+            "api/products/<id>/reviews/",
+            "api/products/top/",
+            "api/products/<id>/",
+            "api/products/delete/<id>/",
+            "api/products/update/<id>/",
         ]
         return Response(routes)
 
