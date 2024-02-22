@@ -26,7 +26,7 @@ const CartScreen = () => {
   console.log(cartItems);
   useEffect(() => {
     if (productId) dispatch(addToCart(productId, qty));
-  }, [dispatch, productId]);
+  }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
@@ -34,7 +34,7 @@ const CartScreen = () => {
 
   const checkoutHandler = () => {
     navigate("/login?redirect=shipping");
-  }
+  };
 
   return (
     <Row>
