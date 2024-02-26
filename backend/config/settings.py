@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
-    "base",
     "accounts",
+    "products",
+    "orders",
 ]
 
 # DRF settings

@@ -20,9 +20,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+API_PREFIX = "api"
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("base.urls")),
-    path("api/users/", include("accounts.urls")),
+    path(f"{API_PREFIX}/products/", include("products.urls")),
+    path(f"{API_PREFIX}/users/", include("accounts.urls")),
+    path(f"{API_PREFIX}/orders/", include("orders.urls")),
+    
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
