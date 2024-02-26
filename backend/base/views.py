@@ -8,15 +8,15 @@ from .models import Product
 from .serializers import (
     ProductSerializer,
     UserSerializer,
-    UserRegisterSerializer,
+    RegisterUserSerializer,
     UserSerializerWithToken,
 )
 
 
-class UserRegister(APIView):
+class RegisterUser(APIView):
 
     def post(self, request):
-        serializer = UserRegisterSerializer(data=request.data)
+        serializer = RegisterUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         data = UserSerializerWithToken(user).data
