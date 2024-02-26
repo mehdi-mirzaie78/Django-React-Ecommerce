@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 function Product({ product }) {
   return (
     <Card className="my-2 p-2 rounded border">
-      <Link to={`/products/${product._id}`}>
+      <Link to={`/products/${product.Id}`}>
         <Card.Img src={product.image} />
       </Link>
       <Card.Body>
-        <Link to={`/products/${product._id}`}>
+        <Link to={`/products/${product.Id}`}>
           <Card.Title as="div">
             <strong>{product.name}</strong>
           </Card.Title>
