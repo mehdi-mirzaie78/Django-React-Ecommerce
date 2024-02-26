@@ -6,6 +6,37 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Product
 
 
+class UserRegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, style={"input_type": "password"})
+
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "username", "email", "password"]
+
+    def validate(self, data):
+        email = data.get("email")
+        username = data.get("username")
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError({"email": "Email is already in use"})
+        if User.objects.filter(username=username).exists():
+            raise serializers.ValidationError(
+                {"username": "Username is already in use"}
+            )
+        return data
+
+    def save(self, *args, **kwargs):
+        user = User(
+            first_name=self.validated_data["first_name"],
+            last_name=self.validated_data["last_name"],
+            username=self.validated_data["username"],
+            email=self.validated_data["email"],
+        )
+        password = self.validated_data["password"]
+        user.set_password(password)
+        user.save()
+        return user
+
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs: Dict[str, Any]) -> Dict[str, str]:
         data = super().validate(attrs)
