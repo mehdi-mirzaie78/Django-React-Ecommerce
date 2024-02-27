@@ -14,9 +14,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "email", "is_admin"]
 
     def get_name(self, obj: User) -> str:
-        if obj.first_name == "":
+        if obj.first_name == "" and obj.last_name == "":
             return obj.email
-        return obj.first_name
+        return f"{obj.first_name} {obj.last_name}"
 
 
 class UserSerializerWithToken(UserSerializer):
