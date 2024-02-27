@@ -3,7 +3,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .models import User
-from .serializers import UserSerializer, RegisterUserSerializer, UserSerializerWithToken
+from .serializers import (
+    UserSerializer,
+    RegisterUserSerializer,
+    UserSerializerWithToken,
+    UserProfileSerializer,
+)
 
 # Create your views here.
 
@@ -23,8 +28,17 @@ class UserProfile(APIView):
 
     def get(self, request):
         user = request.user
-        serializer = UserSerializer(user)
+        serializer = UserProfileSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        serializer = UserProfileSerializer(
+            request.user, data=request.data, partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        data = UserSerializerWithToken(user).data
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class UserList(APIView):
