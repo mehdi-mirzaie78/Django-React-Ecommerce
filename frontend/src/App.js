@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
+import LoginScreen from "./screens/LoginScreen";
 import React from "react";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Container>
           <Routes>
             <Route path="/" Component={HomeScreen} exact />
+            <Route path="/login" Component={LoginScreen} />
             <Route path="/products/:id" Component={ProductScreen} />
             <Route path="/cart/:id?" Component={CartScreen} />
           </Routes>
