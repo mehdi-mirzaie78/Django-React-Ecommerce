@@ -69,9 +69,12 @@ const ShippingScreen = () => {
               onChange={(e) => setAddress(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          <Button type="submit" variant="primary" className="my-3">
-            Continue
-          </Button>
+
+          <div className="text-center">
+            <Button type="submit" variant="primary" className="my-2">
+              Continue
+            </Button>
+          </div>
         </Form>
       </FormContainer>
     </>
