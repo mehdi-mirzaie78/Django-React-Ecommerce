@@ -9,6 +9,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import ShippingScreen from "./screens/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen";
 import React from "react";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" Component={LoginScreen} />
             <Route path="/register" Component={RegisterScreen} />
             <Route path="/shipping" Component={ShippingScreen} />
+            <Route path="/payment" Component={PaymentScreen} />
             <Route path="/profile" Component={ProfileScreen} />
             <Route path="/products/:id" Component={ProductScreen} />
             <Route path="/cart/:id?" Component={CartScreen} />
