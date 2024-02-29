@@ -9,7 +9,7 @@ export const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
     pathname: "/login",
     search: `redirect=${location.substring(1)}`,
   };
-  console.log(path);
+
   return (
     <Nav className="justify-content-center mb-4">
       <Nav.Item>

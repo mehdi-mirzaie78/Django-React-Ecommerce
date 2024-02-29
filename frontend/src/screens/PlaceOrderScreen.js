@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
-  Container,
   Button,
   Row,
   Col,
@@ -12,9 +11,18 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Message } from "../components/Message";
 import { CheckoutSteps } from "../components/CheckoutSteps";
+import { createOrder } from "../actions/orderActions";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
 const PlaceOrderScreen = () => {
+  const navigate = useNavigate();
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const {order, success, error} = orderCreate;
+
+  const dispatch = useDispatch();
+
   const cart = useSelector((state) => state.cart);
+
   cart.itemsPrice = cart.cartItems
     .reduce((acc, item) => acc + item.price * item.qty, 0)
     .toFixed(2);
@@ -26,16 +34,38 @@ const PlaceOrderScreen = () => {
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
   ).toFixed(2);
-  const placeOrder = (e) => {
-    e.preventDefault();
-    console.log("Place Order");
+
+
+
+  useEffect(() => {
+    if (!cart.paymentMethod) {
+      navigate("/payment");
+    }
+    if (success) {
+      navigate(`/order/${order.id}`);
+      dispatch({ type: ORDER_CREATE_RESET })
+    }
+  }, [dispatch, success, navigate, cart.paymentMethod, order]);
+
+  const placeOrder = () => {
+    dispatch(createOrder({
+      orderItems: cart.cartItems,
+      shippingAddress: cart.shippingAddress,
+      paymentMethod: cart.paymentMethod,
+      itemsPrice: cart.itemsPrice,
+      shippingPrice: cart.shippingPrice,
+      taxPrice: cart.taxPrice,
+      totalPrice: cart.totalPrice,
+    }))
   };
+
   return (
     <div>
-      <CheckoutSteps step1 step2 step3 step4 />
+      {error && <Message varient="danger">{error}</Message>}
+      <CheckoutSteps step1 step2 step3 step4/>
       <Row>
         <Col md={8}>
-          <ListGroup style={{ backgroundImage: "none" }} className="p-1">
+          <ListGroup style={{backgroundImage: "none"}} className="p-1">
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
@@ -58,11 +88,11 @@ const PlaceOrderScreen = () => {
                 <Message variant="info">Your cart is empty</Message>
               ) : (
                 <ListGroup
-                  style={{ backgroundImage: "none", boxShadow: "none" }}
+                  style={{backgroundImage: "none", boxShadow: "none"}}
                 >
                   <h2>Order Items</h2>
                   {cart.cartItems.map((item, index) => (
-                    <ListGroup.Item key={index} style={{ backgroundImage: "" }}>
+                    <ListGroup.Item key={index} style={{backgroundImage: ""}}>
                       <Row className="align-items-center">
                         <Col md={2}>
                           <Image
@@ -72,12 +102,12 @@ const PlaceOrderScreen = () => {
                             rounded
                           />
                         </Col>
-                        <Col md={5}>
+                        <Col md={6}>
                           <Link to={`/products/${item.product}`}>
                             {item.name}
                           </Link>
                         </Col>
-                        <Col md={5}>
+                        <Col md={4} className="text-center">
                           {item.qty} X ${item.price} = $
                           {(item.qty * item.price).toFixed(2)}
                         </Col>
@@ -90,10 +120,10 @@ const PlaceOrderScreen = () => {
           </ListGroup>
         </Col>
         <Col md={4}>
-          <Card style={{ backgroundImage: "none", boxShadow: "none" }}>
+          <Card style={{backgroundImage: "none", boxShadow: "none"}}>
             <ListGroup
               varient="flush"
-              style={{ backgroundImage: "none" }}
+              style={{backgroundImage: "none"}}
               className="p-1"
             >
               <ListGroup.Item>
