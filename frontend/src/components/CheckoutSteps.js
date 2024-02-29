@@ -1,13 +1,20 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 export const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
+  const location = useLocation().pathname;
+  const path = {
+    pathname: "/login",
+    search: `redirect=${location.substring(1)}`,
+  };
+  console.log(path);
   return (
     <Nav className="justify-content-center mb-4">
       <Nav.Item>
         {step1 ? (
-          <LinkContainer to="/login">
+          <LinkContainer to={path}>
             <Nav.Link>Login</Nav.Link>
           </LinkContainer>
         ) : (

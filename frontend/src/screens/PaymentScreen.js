@@ -10,7 +10,7 @@ const PaymentScreen = () => {
   const navigate = useNavigate();
   const { shippingAddress } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const [paymentMethod, setPaymentMethod] = useState("Paypal");
+  const [paymentMethod, setPaymentMethod] = useState("PayPal");
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
