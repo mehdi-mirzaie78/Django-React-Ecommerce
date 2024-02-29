@@ -14,9 +14,9 @@ class ProductSerializer(serializers.ModelSerializer):
             "category",
             "description",
             "rating",
-            "numReviews",
+            "num_reviews",
             "price",
-            "countInStock",
+            "count_in_stock",
             "reviews",
         ]
 

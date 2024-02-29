@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from .models import Order, OrderItem, ShippingAddress
+from .models import Order, ShippingAddress
 from .serializers import OrderSerializer
 
 
@@ -11,8 +11,8 @@ class OrderAddView(APIView):
 
     def post(self, request):
         data = request.data
-        order_items = data["orderItems"]
-        shipping_address = data["shippingAddress"]
+        order_items = data["order_items"]
+        shipping_address = data["shipping_address"]
 
         order = Order.create_order_from_data(request.user, data)
         ShippingAddress.create_shipping_address_from_data(order, shipping_address)
