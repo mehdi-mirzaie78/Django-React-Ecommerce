@@ -1,3 +1,10 @@
 *venv
 *__pycache__
 *migrations
+/.idea/.gitignore
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/dj-react.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml
