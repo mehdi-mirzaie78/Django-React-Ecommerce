@@ -1,7 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from accounts.permissions import IsOwnerOrAdmin
 from .models import Order, ShippingAddress
 from .serializers import OrderSerializer
 
@@ -20,3 +22,20 @@ class OrderAddView(APIView):
 
         serializer = OrderSerializer(order)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class OrderDetailView(APIView):
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
+
+    def get_obj(self, pk):
+        queryset = Order.objects.filter(pk=pk)
+        if not queryset.exists():
+            raise NotFound(detail="Order Not Found")
+        obj = queryset.get()
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    def get(self, request, pk):
+        order = self.get_obj(pk)
+        serializer = OrderSerializer(order)
+        return Response(serializer.data, status=status.HTTP_200_OK)
