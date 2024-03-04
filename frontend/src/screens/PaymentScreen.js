@@ -41,7 +41,7 @@ const PaymentScreen = () => {
                 ></Form.Check>
               </Col>
               <Col sm={12} md={6} className="text-end my-1">
-                <Button type="submit" varient="primary">
+                <Button type="submit" variant="primary">
                   Continue
                 </Button>
               </Col>
