@@ -43,10 +43,13 @@ class OrderDetailView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class OrderUpdateToPaid(APIView):
+class OrderUpdateToPaidView(APIView):
+
     def get(self, request, pk):
         queryset = Order.objects.filter(pk=pk)
         if not queryset.exists():
             raise NotFound(detail="Order Not Found")
         queryset.update(is_paid=True, paid_at=datetime.now(timezone("Asia/Tehran")))
-        return {"msg": f"Order {pk} updated successfully"}
+        return Response(
+            {"msg": f"Order {pk} updated successfully"}, status=status.HTTP_200_OK
+        )
