@@ -45,7 +45,7 @@ class OrderDetailView(APIView):
 
 class OrderUpdateToPaidView(APIView):
 
-    def get(self, request, pk):
+    def put(self, request, pk):
         queryset = Order.objects.filter(pk=pk)
         if not queryset.exists():
             raise NotFound(detail="Order Not Found")
