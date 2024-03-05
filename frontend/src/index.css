@@ -19,3 +19,7 @@ h3 {
 .rating span {
   margin: 0.06rem;
 }
+
+table tr td, table tr th{
+  background-color: rgba(211, 130, 240, 0) !important;
+}
