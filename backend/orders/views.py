@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from accounts.permissions import IsOwnerOrAdmin
 from .models import Order, ShippingAddress
 from .serializers import OrderSerializer
+from .mixins import CustomObjectMixin
 
 
 class OrderAddView(APIView):
@@ -26,16 +27,17 @@ class OrderAddView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class OrderDetailView(APIView):
-    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
+class OrderListView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    def get_obj(self, pk):
-        queryset = Order.objects.filter(pk=pk)
-        if not queryset.exists():
-            raise NotFound(detail="Order Not Found")
-        obj = queryset.get()
-        self.check_object_permissions(self.request, obj)
-        return obj
+    def get(self, request):
+        queryset = Order.objects.filter(user=request.user)
+        serializer = OrderSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class OrderDetailView(APIView, CustomObjectMixin):
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
 
     def get(self, request, pk):
         order = self.get_obj(pk)
@@ -43,13 +45,15 @@ class OrderDetailView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class OrderUpdateToPaidView(APIView):
+class OrderUpdateToPaidView(APIView, CustomObjectMixin):
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
 
     def put(self, request, pk):
-        queryset = Order.objects.filter(pk=pk)
-        if not queryset.exists():
-            raise NotFound(detail="Order Not Found")
-        queryset.update(is_paid=True, paid_at=datetime.now(timezone("Asia/Tehran")))
+        order = self.get_obj(pk)
+        order.is_paid = True
+        order.paid_at = datetime.now(timezone("Asia/Tehran"))
+        order.save()
+
         return Response(
             {"msg": f"Order {pk} updated successfully"}, status=status.HTTP_200_OK
         )
