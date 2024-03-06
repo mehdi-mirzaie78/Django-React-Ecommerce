@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Message } from "../components/Message";
@@ -11,6 +11,9 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { ORDER_PAY_RESET } from "../constants/orderConstants";
 
 const OrderDetailsScreen = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const orderId = useParams().id;
   const dispatch = useDispatch();
 
@@ -42,6 +45,10 @@ const OrderDetailsScreen = () => {
   };
 
   useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (!userInfo) {
+      navigate(`/login?redirect=${location.pathname.substring(1)}`);
+    }
     if (!order || successPay || order.id !== Number(orderId)) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
@@ -52,7 +59,7 @@ const OrderDetailsScreen = () => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, order, orderId, successPay]);
+  }, [location, navigate, dispatch, order, orderId, successPay]);
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult));
@@ -87,7 +94,8 @@ const OrderDetailsScreen = () => {
 
               {order.isDelivered ? (
                 <Message variant="success">
-                  Delivered {order.deliveredAt}
+                  Delivered{" "}
+                  {moment(order.deliveredAt).format("YYYY/MM/DD HH:mm:ss")}
                 </Message>
               ) : (
                 <Message variant="warning">Not Delivered</Message>
@@ -119,11 +127,8 @@ const OrderDetailsScreen = () => {
                 >
                   <h2>Order Items</h2>
                   {order.orderItems.map((item, index) => (
-                    <>
-                      <ListGroup.Item
-                        key={index}
-                        style={{ backgroundImage: "" }}
-                      >
+                    <Fragment key={index}>
+                      <ListGroup.Item style={{ backgroundImage: "" }}>
                         <Row className="align-items-center">
                           <Col md={2}>
                             <Image
@@ -145,7 +150,7 @@ const OrderDetailsScreen = () => {
                         </Row>
                       </ListGroup.Item>
                       <Hr />
-                    </>
+                    </Fragment>
                   ))}
                 </ListGroup>
               )}
