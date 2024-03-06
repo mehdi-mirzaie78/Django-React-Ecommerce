@@ -5,7 +5,7 @@ import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../components/Loader";
 import { Message } from "../components/Message";
-import { getUserList } from "../actions/userActions";
+import { getUserList, deleteUser } from "../actions/userActions";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
@@ -18,6 +18,13 @@ const UserListScreen = () => {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
 
+  const userDelete = useSelector((state) => state.userDelete);
+  const {
+    loading: userDeleteLoading,
+    success: userDeleteSuccess,
+    error: userDeleteError,
+  } = userDelete;
+
   useEffect(() => {
     if (!userInfo) {
       navigate(`/login?redirect=${location.pathname.substring(1)}`);
@@ -25,13 +32,20 @@ const UserListScreen = () => {
       navigate("/");
     }
     dispatch(getUserList());
-  }, [dispatch, navigate, location, userInfo]);
+  }, [dispatch, navigate, location, userInfo, userDeleteSuccess]);
 
   const deleteHandler = (userId) => {
-    console.log(userId);
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      dispatch(deleteUser(userId));
+    }
   };
   return (
-    <div>
+    <>
+      {userDeleteLoading ? (
+        <Loader />
+      ) : (
+        userDeleteError && <Message variant="danger">{userDeleteError}</Message>
+      )}
       <h1>Users</h1>
       {loading ? (
         <Loader />
@@ -85,7 +99,7 @@ const UserListScreen = () => {
           </tbody>
         </Table>
       )}
-    </div>
+    </>
   );
 };
 
