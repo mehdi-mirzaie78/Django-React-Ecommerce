@@ -6,14 +6,14 @@ from .models import Product
 from .serializers import ProductSerializer
 
 
-class ProductList(APIView):
+class ProductListView(APIView):
     def get(self, request):
         queryset = Product.objects.all()
         serializer = ProductSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ProductDetail(APIView):
+class ProductDetailView(APIView):
     def get(self, request, pk):
         product = get_object_or_404(Product, pk=pk)
         serializer = ProductSerializer(product)

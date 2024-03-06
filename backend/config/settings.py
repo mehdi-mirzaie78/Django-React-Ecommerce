@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "accounts",
     "products",
     "orders",
+    "management",
 ]
 
 # DRF settings
@@ -192,3 +193,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 
 AUTH_USER_MODEL = "accounts.User"
+
+API_PREFIX = "api"
