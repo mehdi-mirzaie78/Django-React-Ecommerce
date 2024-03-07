@@ -2,7 +2,7 @@ from typing import Any, Dict
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import User
+from ..models import User
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

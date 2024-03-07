@@ -4,9 +4,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from ..models import User
-from ..serializers import (
-    UserSerializer,
-)
+from ..serializers import UserAdminSerializer
 
 
 class UserListView(APIView):
@@ -14,7 +12,7 @@ class UserListView(APIView):
 
     def get(self, request):
         queryset = User.objects.all()
-        serializer = UserSerializer(queryset, many=True)
+        serializer = UserAdminSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -29,10 +27,17 @@ class UserDetailView(APIView):
 
     def get(self, request, pk):
         user = self.get_obj(pk)
-        serializer = UserSerializer(user)
+        serializer = UserAdminSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):
         user = self.get_obj(pk)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def put(self, request, pk):
+        user = self.get_obj(pk)
+        serializer = UserAdminSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)

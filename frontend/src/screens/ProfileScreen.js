@@ -140,7 +140,12 @@ const ProfileScreen = () => {
           <Message variant="danger">{errorOrders}</Message>
         ) : (
           <div className="border rounded">
-            <Table striped responsive className="table-sm text-center mb-0">
+            <Table
+              striped
+              hover
+              responsive
+              className="table-sm text-center mb-0"
+            >
               <thead>
                 <tr style={{ lineHeight: "2.5rem" }}>
                   <th>ID</th>

@@ -3,9 +3,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Loader } from "../components/Loader";
-import { Message } from "../components/Message";
-import { getUserList, deleteUser } from "../actions/userActions";
+import { Loader } from "../../components/Loader";
+import { Message } from "../../components/Message";
+import { getUserList, deleteUser } from "../../actions/userActions";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
@@ -65,7 +65,8 @@ const UserListScreen = () => {
               <th>NAME</th>
               <th>EMAIL</th>
               <th>ADMIN</th>
-              <th>Action</th>
+              <th>ACTIVATION</th>
+              <th>ACTIONS</th>
             </tr>
           </thead>
           <tbody>
@@ -76,6 +77,13 @@ const UserListScreen = () => {
                 <td>{user.email}</td>
                 <td>
                   {user.isAdmin ? (
+                    <i className="fas fa-check" style={{ color: "green" }} />
+                  ) : (
+                    <i className="fas fa-times" style={{ color: "red" }} />
+                  )}
+                </td>
+                <td>
+                  {user.isActive ? (
                     <i className="fas fa-check" style={{ color: "green" }} />
                   ) : (
                     <i className="fas fa-times" style={{ color: "red" }} />

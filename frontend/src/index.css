@@ -20,6 +20,11 @@ h3 {
   margin: 0.06rem;
 }
 
-table tr td, table tr th{
-  background-color: rgba(211, 130, 240, 0) !important;
+table, tbody, tr, th, td{
+  background-color: rgba(0, 0, 0, 0.0) !important;
+}
+
+td, th {
+  text-align: center;
+  vertical-align: middle;
 }

@@ -21,6 +21,12 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
+  USER_ADMIN_DETAILS_REQUEST,
+  USER_ADMIN_DETAILS_SUCCESS,
+  USER_ADMIN_DETAILS_FAIL,
+  USER_ADMIN_UPDATE_REQUEST,
+  USER_ADMIN_UPDATE_SUCCESS,
+  USER_ADMIN_UPDATE_FAIL,
 } from "../constants/userConstants";
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 
@@ -233,6 +239,84 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const getUserAdminDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_ADMIN_DETAILS_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/management/user/${id}/`, config);
+
+    dispatch({
+      type: USER_ADMIN_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_ADMIN_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const updateUserAdmin = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_ADMIN_UPDATE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // remove empty fields
+    for (let key in user) {
+      if (user[key] === "") {
+        delete user[key];
+      }
+    }
+
+    const { data } = await axios.put(
+      `/api/management/user/${user.id}/`,
+      user,
+      config
+    );
+
+    dispatch({
+      type: USER_ADMIN_UPDATE_SUCCESS,
+    });
+
+    dispatch({
+      type: USER_ADMIN_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_ADMIN_UPDATE_FAIL,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
