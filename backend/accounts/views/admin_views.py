@@ -7,7 +7,7 @@ from ..models import User
 from ..serializers import UserAdminSerializer
 
 
-class UserListView(APIView):
+class UserAdminListView(APIView):
     permission_classes = [IsAdminUser]
 
     def get(self, request):
@@ -16,7 +16,7 @@ class UserListView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class UserDetailView(APIView):
+class UserAdminDetailView(APIView):
     permission_classes = [IsAdminUser]
 
     def get_obj(self, pk):
