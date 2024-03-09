@@ -15,6 +15,12 @@ import {
   PRODUCT_ADMIN_DELETE_REQUEST,
   PRODUCT_ADMIN_DELETE_SUCCESS,
   PRODUCT_ADMIN_DELETE_FAIL,
+  PRODUCT_ADMIN_CREATE_REQUEST,
+  PRODUCT_ADMIN_CREATE_SUCCESS,
+  PRODUCT_ADMIN_CREATE_FAIL,
+  PRODUCT_ADMIN_UPDATE_REQUEST,
+  PRODUCT_ADMIN_UPDATE_SUCCESS,
+  PRODUCT_ADMIN_UPDATE_FAIL,
 } from "../constants/productConstants";
 
 export const listProducts = () => async (dispatch) => {
@@ -128,6 +134,80 @@ export const deleteProductAdmin = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_ADMIN_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const createProductAdmin = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_ADMIN_CREATE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `/api/management/product/list/`,
+      {},
+      config
+    );
+    dispatch({ type: PRODUCT_ADMIN_CREATE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_ADMIN_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const updateProductAdmin = (product) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_ADMIN_UPDATE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const formData = new FormData();
+    for (let key in product) {
+      if (key !== "image") {
+        formData.append(key, product[key]);
+      } else if (key === "image" && product[key] instanceof File) {
+        formData.append("image", product[key]);
+      }
+    }
+
+    const { data } = await axios.put(
+      `/api/management/product/${product.id}/`,
+      formData,
+      config
+    );
+    dispatch({ type: PRODUCT_ADMIN_UPDATE_SUCCESS, payload: data });
+
+    dispatch({ type: PRODUCT_ADMIN_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_ADMIN_UPDATE_FAIL,
       payload:
         error.response && error.response.data.detail
           ? error.response.data.detail

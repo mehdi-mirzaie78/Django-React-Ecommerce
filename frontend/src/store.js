@@ -7,6 +7,8 @@ import {
   productAdminListReducer,
   productAdminDetailsReducer,
   productAdminDeleteReducer,
+  productAdminCreateReducer,
+  productAdminUpdateReducer,
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -46,6 +48,8 @@ const reducer = combineReducers({
   productAdminList: productAdminListReducer,
   productAdminDetails: productAdminDetailsReducer,
   productAdminDelete: productAdminDeleteReducer,
+  productAdminCreate: productAdminCreateReducer,
+  productAdminUpdate: productAdminUpdateReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

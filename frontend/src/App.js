@@ -16,12 +16,13 @@ import UserListScreen from "./screens/admin/UserListScreen";
 import UserEditScreen from "./screens/admin/UserEditScreen";
 import React from "react";
 import ProductListScreen from "./screens/admin/ProductListScreen";
+import ProductEditScreen from "./screens/admin/ProductEditScreen";
 
 function App() {
   return (
     <Router>
       <Header />
-      <main className="py-3">
+      <main className="pt-2">
         <Container>
           <Routes>
             <Route path="/" Component={HomeScreen} exact />
@@ -38,6 +39,7 @@ function App() {
             <Route path="/admin/user/list" Component={UserListScreen} />
             <Route path="/admin/user/:id" Component={UserEditScreen} />
             <Route path="/admin/product/list" Component={ProductListScreen} />
+            <Route path="/admin/product/:id" Component={ProductEditScreen} />
           </Routes>
         </Container>
       </main>

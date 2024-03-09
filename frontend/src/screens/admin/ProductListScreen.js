@@ -8,7 +8,9 @@ import { Message } from "../../components/Message";
 import {
   getProductAdminList,
   deleteProductAdmin,
+  createProductAdmin,
 } from "../../actions/productActions";
+import { PRODUCT_ADMIN_CREATE_RESET } from "../../constants/productConstants";
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
@@ -27,22 +29,45 @@ const ProductListScreen = () => {
     error: errorProductDelete,
     success: successDelete,
   } = productAdminDelete;
+
+  const productAdminCreate = useSelector((state) => state.productAdminCreate);
+  const {
+    loading: loadingProductCreate,
+    error: errorProductCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productAdminCreate;
+
   useEffect(() => {
+    dispatch({ type: PRODUCT_ADMIN_CREATE_RESET });
+
     if (!userInfo) {
       navigate(`/login?redirect=${location.pathname.substring(1)}`);
     } else if (!userInfo.isAdmin) {
       navigate("/");
     }
-    dispatch(getProductAdminList());
-  }, [dispatch, navigate, location, userInfo, successDelete]);
+    if (successCreate) {
+      navigate(`/admin/product/${createdProduct.id}`);
+    } else {
+      dispatch(getProductAdminList());
+    }
+  }, [
+    dispatch,
+    navigate,
+    location,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const deleteHandler = (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       dispatch(deleteProductAdmin(productId));
     }
   };
-  const createProductHandler = (product) => {
-    console.log("Create");
+  const createProductHandler = () => {
+    dispatch(createProductAdmin());
   };
   return (
     <>
@@ -60,8 +85,11 @@ const ProductListScreen = () => {
       {errorProductDelete && (
         <Message variant="danger">{errorProductDelete}</Message>
       )}
+      {errorProductCreate && (
+        <Message variant="danger">{errorProductCreate}</Message>
+      )}
 
-      {loading || loadingProductDelete ? (
+      {loading || loadingProductDelete || loadingProductCreate ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>

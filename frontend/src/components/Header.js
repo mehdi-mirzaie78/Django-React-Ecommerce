@@ -15,7 +15,13 @@ function Header() {
   };
   return (
     <header>
-      <Navbar expand="lg" bg="light" variant="light" collapseOnSelect>
+      <Navbar
+        expand="lg"
+        bg="light"
+        variant="light"
+        collapseOnSelect
+        className="py-1"
+      >
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>TechnoMark</Navbar.Brand>
