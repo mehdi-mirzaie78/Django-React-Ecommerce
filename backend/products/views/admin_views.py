@@ -20,8 +20,8 @@ class ProductAdminListView(APIView):
     def post(self, request):
         serializer = self.serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        instance = serializer.create(request)
+        return Response(self.serializer(instance).data, status=status.HTTP_201_CREATED)
 
 
 class ProductAdminDetailView(APIView):

@@ -7,3 +7,6 @@ class ProductAdminSerializer(serializers.ModelSerializer):
         model = Product
         fields = "__all__"
 
+    def create(self, request):
+        self.validated_data["user"] = request.user
+        return super().create(self.validated_data)
