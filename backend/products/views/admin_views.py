@@ -50,5 +50,4 @@ class ProductAdminDetailView(APIView):
     def delete(self, request, pk):
         product = self.get_obj(pk)
         product.delete()
-        print(f"{product} deleted successfully")
         return Response(status=status.HTTP_204_NO_CONTENT)
