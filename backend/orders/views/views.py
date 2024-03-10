@@ -2,13 +2,12 @@ from pytz import timezone
 from datetime import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from accounts.permissions import IsOwnerOrAdmin
-from .models import Order, ShippingAddress
-from .serializers import OrderSerializer
-from .mixins import CustomObjectMixin
+from ..models import Order, ShippingAddress
+from ..serializers import OrderSerializer
+from ..mixins import CustomObjectMixin
 
 
 class OrderAddView(APIView):
@@ -55,5 +54,5 @@ class OrderUpdateToPaidView(APIView, CustomObjectMixin):
         order.save()
 
         return Response(
-            {"msg": f"Order {pk} updated successfully"}, status=status.HTTP_200_OK
+            {"detail": f"Order {pk} updated successfully"}, status=status.HTTP_200_OK
         )

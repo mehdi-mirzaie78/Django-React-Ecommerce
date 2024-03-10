@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import Iterable, List, Dict
 from django.db import models
 from accounts.models import User
 from products.models import Product

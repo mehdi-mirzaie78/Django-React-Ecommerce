@@ -1,7 +1,6 @@
-from rest_framework import serializers, status
-from rest_framework.exceptions import ValidationError
+from rest_framework import serializers
 from accounts.serializers import UserSerializer
-from .models import Order, OrderItem, ShippingAddress
+from ..models import Order, OrderItem, ShippingAddress
 
 
 class ShippingAddressSerializer(serializers.ModelSerializer):

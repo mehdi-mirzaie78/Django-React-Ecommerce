@@ -132,14 +132,14 @@ const ProductListScreen = () => {
                     className="mx-1"
                   >
                     <Button variant="info" className="btn-sm">
-                      <i className="fas fa-edit" />
+                      <i className="fas fa-edit" /> EDIT
                     </Button>
                   </LinkContainer>
                   <Button
                     className="btn-sm mx-1"
                     onClick={() => deleteHandler(product.id)}
                   >
-                    <i className="fas fa-trash" />
+                    <i className="fas fa-trash" /> DELETE
                   </Button>
                 </td>
               </tr>
