@@ -62,8 +62,14 @@ const OrderEditScreen = () => {
     <Loader />
   ) : error ? (
     <Message variant="danger">{error}</Message>
+  ) : errorUpdate ? (
+    <Message variant="danger">{errorUpdate}</Message>
   ) : (
-    <div>
+    <>
+      <Link to="/admin/order/list" className="btn btn-light mt-1 mb-2">
+        Go Back
+      </Link>
+
       <Row>
         <Col md={8}>
           <ListGroup style={{ backgroundImage: "none" }} className="p-1 px-2">
@@ -212,10 +218,11 @@ const OrderEditScreen = () => {
                 </ListGroup.Item>
               )}
             </ListGroup>
+            {loadingUpdate && <Loader />}
           </Card>
         </Col>
       </Row>
-    </div>
+    </>
   );
 };
 

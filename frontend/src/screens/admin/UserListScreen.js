@@ -77,16 +77,28 @@ const UserListScreen = () => {
                 <td>{user.email}</td>
                 <td>
                   {user.isAdmin ? (
-                    <i className="fas fa-check" style={{ color: "green" }} />
+                    <i
+                      className="fas fa-check"
+                      style={{ color: "rgb(144,238,144)", fontSize: "1.4rem" }}
+                    />
                   ) : (
-                    <i className="fas fa-times" style={{ color: "red" }} />
+                    <i
+                      className="fas fa-times"
+                      style={{ color: "red", fontSize: "1.4rem" }}
+                    />
                   )}
                 </td>
                 <td>
                   {user.isActive ? (
-                    <i className="fas fa-check" style={{ color: "green" }} />
+                    <i
+                      className="fas fa-check"
+                      style={{ color: "rgb(144,238,144)", fontSize: "1.4rem" }}
+                    />
                   ) : (
-                    <i className="fas fa-times" style={{ color: "red" }} />
+                    <i
+                      className="fas fa-times"
+                      style={{ color: "red", fontSize: "1.4rem" }}
+                    />
                   )}
                 </td>
                 <td>

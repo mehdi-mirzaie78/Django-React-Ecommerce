@@ -76,7 +76,7 @@ const ProductEditScreen = () => {
   };
   return (
     <>
-      <Link to="/admin/product/list" className="btn btn-light mt-1">
+      <Link to="/admin/product/list" className="btn btn-light mt-1 mb-2">
         Go Back
       </Link>
 

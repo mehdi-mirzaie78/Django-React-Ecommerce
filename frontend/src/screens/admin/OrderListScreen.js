@@ -28,11 +28,6 @@ const OrderListScreen = () => {
     dispatch(getOrderAdminList());
   }, [dispatch, navigate, location, userInfo]);
 
-  const deleteHandler = (orderId) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      console.log(`Order ${orderId} deleted`);
-    }
-  };
   return (
     <>
       <h1 className="text-center">Orders</h1>
