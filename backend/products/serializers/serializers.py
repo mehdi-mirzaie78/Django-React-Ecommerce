@@ -1,8 +1,11 @@
 from rest_framework import serializers
-from ..models import Product
+from ..models import Product, Review
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    reviews = serializers.SerializerMethodField()
+
     class Meta:
         model = Product
         fields = [
@@ -20,4 +23,19 @@ class ProductSerializer(serializers.ModelSerializer):
             "reviews",
         ]
 
+    def get_reviews(self, obj: Product):
+        queryset = obj.reviews.all()
+        return ReviewSerializer(queryset, many=True).data
+
+
+class ReviewSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+
+    class Meta:
+        model = Review
+        fields = ["id", "product", "user", "name", "rating", "comment", "created_at"]
+
+    def validate_rating(self, value):
+        if 0 < value <= 5:
+            return value
+        raise serializers.ValidationError("rating must be an integer between 1 to 5.")

@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from accounts.models import User
 
@@ -22,6 +23,14 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def update_product_rating_based_on_reviews(self):
+        queryset = Review.objects.filter(product=self)
+        if queryset.count() > 0:
+            self.num_reviews = queryset.count()
+            rating_list = [review.rating for review in queryset]
+            self.rating = sum(rating_list) / len(rating_list)
+            self.save()
+
 
 class Review(models.Model):
     product = models.ForeignKey(
@@ -33,6 +42,10 @@ class Review(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)
     rating = models.IntegerField(null=True, blank=True, default=0)
     comment = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return str(self.rating)
+
+    class Meta:
+        unique_together = ["product", "user"]
