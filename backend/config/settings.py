@@ -64,6 +64,7 @@ REST_FRAMEWORK = {
         "djangorestframework_camel_case.parser.CamelCaseJSONParser",
         # Any other parsers
     ),
+    "EXCEPTION_HANDLER": "exception_handler.api_exception_handler",
 }
 
 # JWT settings
