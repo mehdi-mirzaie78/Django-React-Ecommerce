@@ -35,8 +35,8 @@ export const listProducts = () => async (dispatch) => {
     dispatch({
       type: PRODUCT_LIST_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -51,8 +51,8 @@ export const detailsProduct = (id) => async (dispatch) => {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -81,11 +81,12 @@ export const createProductReview =
       );
       dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCESS, payload: data });
     } catch (error) {
+      console.log(error);
       dispatch({
         type: PRODUCT_CREATE_REVIEW_FAIL,
         payload:
-          error.response && error.response.data.detail
-            ? error.response.data.detail
+          error.response && error.response.data.error.detail
+            ? error.response.data.error.detail
             : error.message,
       });
     }
@@ -112,8 +113,8 @@ export const getProductAdminList = () => async (dispatch, getState) => {
     dispatch({
       type: PRODUCT_ADMIN_LIST_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -140,8 +141,8 @@ export const getProductAdminDetails = (id) => async (dispatch, getState) => {
     dispatch({
       type: PRODUCT_ADMIN_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -171,8 +172,8 @@ export const deleteProductAdmin = (id) => async (dispatch, getState) => {
     dispatch({
       type: PRODUCT_ADMIN_DELETE_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -203,8 +204,8 @@ export const createProductAdmin = () => async (dispatch, getState) => {
     dispatch({
       type: PRODUCT_ADMIN_CREATE_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -245,8 +246,8 @@ export const updateProductAdmin = (product) => async (dispatch, getState) => {
     dispatch({
       type: PRODUCT_ADMIN_UPDATE_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }

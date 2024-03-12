@@ -47,7 +47,7 @@ const OrderDetailsScreen = () => {
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (!userInfo) {
-      navigate(`/login?redirect=${location.pathname.substring(1)}`);
+      navigate(`/login?redirect=${location.pathname}`);
     }
     if (!order || successPay || order.id !== Number(orderId)) {
       dispatch({ type: ORDER_PAY_RESET });

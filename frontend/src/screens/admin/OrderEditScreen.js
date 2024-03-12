@@ -39,7 +39,7 @@ const OrderEditScreen = () => {
 
   useEffect(() => {
     if (!userInfo) {
-      navigate(`/login?redirect=${location.pathname.substring(1)}`);
+      navigate(`/login?redirect=${location.pathname}`);
     } else if (!userInfo.isAdmin) {
       navigate("/");
     } else if (!order || order.id !== Number(orderId) || successUpdate) {

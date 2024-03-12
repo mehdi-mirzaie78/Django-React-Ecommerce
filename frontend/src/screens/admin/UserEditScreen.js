@@ -5,8 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../../components/Loader";
 import { Message } from "../../components/Message";
 import { FormContainer } from "../../components/FormContainer";
-import { getUserAdminDetails, updateUserAdmin } from "../../actions/userActions";
-import { USER_ADMIN_UPDATE_RESET } from "../../constants/userConstants";
+import {
+  getUserAdminDetails,
+  updateUserAdmin,
+} from "../../actions/userActions";
+import {
+  USER_ADMIN_UPDATE_RESET,
+  USER_DETAILS_RESET,
+} from "../../constants/userConstants";
 
 const UserEditScreen = () => {
   const { id } = useParams();
@@ -35,7 +41,7 @@ const UserEditScreen = () => {
 
   useEffect(() => {
     if (!userInfo) {
-      navigate(`/login?redirect=${location.pathname.substring(1)}`);
+      navigate(`/login?redirect=${location.pathname}`);
     } else if (!userInfo.isAdmin) {
       navigate("/");
     } else if (successUpdate) {
@@ -71,12 +77,22 @@ const UserEditScreen = () => {
         Go Back
       </Link>
       {loadingUpdate && <Loader />}
-      {errorUpdate && <Message variant="danger">{error}</Message>}
+      {errorUpdate && (
+        <Message
+          variant="danger"
+          dismissible
+          onClose={(a, b) => dispatch({ type: USER_ADMIN_UPDATE_RESET })}
+        >
+          {errorUpdate}
+        </Message>
+      )}
 
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message variant="danger" dismissible>
+          {error}
+        </Message>
       ) : (
         <FormContainer>
           <h1>Edit User</h1>

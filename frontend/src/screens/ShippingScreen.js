@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { FormContainer } from "../components/FormContainer";
@@ -8,20 +8,32 @@ import { saveShippingAddress } from "../actions/cartActions";
 
 const ShippingScreen = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  const { shippingAddress, cartItems } = cart;
   const [country, setCountry] = useState(shippingAddress.country);
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [address, setAddress] = useState(shippingAddress.address);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ country, city, postalCode, address }));
     navigate("/payment");
   };
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate(`/login?redirect=${location.pathname}`);
+    } else if (cartItems.length === 0) {
+      navigate(`/cart`);
+    }
+  }, [userInfo, location, navigate, cartItems]);
 
   return (
     <>

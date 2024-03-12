@@ -42,7 +42,7 @@ const ProductListScreen = () => {
     dispatch({ type: PRODUCT_ADMIN_CREATE_RESET });
 
     if (!userInfo) {
-      navigate(`/login?redirect=${location.pathname.substring(1)}`);
+      navigate(`/login?redirect=${location.pathname}`);
     } else if (!userInfo.isAdmin) {
       navigate("/");
     }

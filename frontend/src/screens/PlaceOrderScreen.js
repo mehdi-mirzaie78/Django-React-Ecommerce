@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Message } from "../components/Message";
@@ -10,12 +10,17 @@ import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
 
-  const dispatch = useDispatch();
-
   const cart = useSelector((state) => state.cart);
+  const { cartItems, shippingAddress } = cart;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   cart.itemsPrice = cart.cartItems
     .reduce((acc, item) => acc + item.price * item.qty, 0)
@@ -30,7 +35,13 @@ const PlaceOrderScreen = () => {
   ).toFixed(2);
 
   useEffect(() => {
-    if (!cart.paymentMethod) {
+    if (!userInfo) {
+      navigate(`/login?redirect=${location.pathname}`);
+    } else if (cartItems.length === 0) {
+      navigate(`/cart`);
+    } else if (!shippingAddress.address) {
+      navigate("/shipping");
+    } else if (!cart.paymentMethod) {
       navigate("/payment");
     }
     if (success) {

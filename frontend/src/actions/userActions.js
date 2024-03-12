@@ -58,8 +58,8 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: USER_LOGIN_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -105,8 +105,8 @@ export const register =
       dispatch({
         type: USER_REGISTER_FAIL,
         payload:
-          error.response && error.response.data.detail
-            ? error.response.data.detail
+          error.response && error.response.data.error.detail
+            ? error.response.data.error.detail
             : error.message,
       });
     }
@@ -136,8 +136,8 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     dispatch({
       type: USER_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -182,8 +182,8 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -211,8 +211,8 @@ export const getUserList = () => async (dispatch, getState) => {
     dispatch({
       type: USER_LIST_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -240,8 +240,8 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     dispatch({
       type: USER_DELETE_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -271,8 +271,8 @@ export const getUserAdminDetails = (id) => async (dispatch, getState) => {
     dispatch({
       type: USER_ADMIN_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -318,8 +318,8 @@ export const updateUserAdmin = (user) => async (dispatch, getState) => {
     dispatch({
       type: USER_ADMIN_UPDATE_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }

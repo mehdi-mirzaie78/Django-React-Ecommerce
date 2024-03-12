@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { FormContainer } from "../components/FormContainer";
@@ -8,18 +8,32 @@ import { savePaymentMethod } from "../actions/cartActions";
 
 const PaymentScreen = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { shippingAddress } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [paymentMethod, setPaymentMethod] = useState("PayPal");
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate(`/login?redirect=${location.pathname}`);
+    } else if (cartItems.length === 0) {
+      navigate(`/cart`);
+    } else if (!shippingAddress.address) {
+      navigate("/shipping");
+    }
+  }, [userInfo, navigate, location, cartItems, shippingAddress]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
     navigate("/placeorder");
   };
-  if (!shippingAddress.address) {
-    navigate("/shipping");
-  }
-
   return (
     <>
       <CheckoutSteps step1 step2 step3 />

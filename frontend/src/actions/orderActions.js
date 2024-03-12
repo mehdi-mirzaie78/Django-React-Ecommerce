@@ -53,8 +53,8 @@ export const createOrder = (order) => async (dispatch, getState) => {
     dispatch({
       type: ORDER_CREATE_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -85,8 +85,8 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     dispatch({
       type: ORDER_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -120,8 +120,8 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
     dispatch({
       type: ORDER_PAY_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -152,8 +152,8 @@ export const listMyOrders = () => async (dispatch, getState) => {
     dispatch({
       type: ORDER_LIST_MY_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -184,8 +184,8 @@ export const getOrderAdminList = () => async (dispatch, getState) => {
     dispatch({
       type: ORDER_ADMIN_LIST_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -216,8 +216,8 @@ export const getOrderAdminDetails = (id) => async (dispatch, getState) => {
     dispatch({
       type: ORDER_ADMIN_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }
@@ -252,8 +252,8 @@ export const updateOrderAdmin = (order) => async (dispatch, getState) => {
     dispatch({
       type: ORDER_ADMIN_UPDATE_FAIL,
       payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
+        error.response && error.response.data.error.detail
+          ? error.response.data.error.detail
           : error.message,
     });
   }

@@ -21,7 +21,7 @@ const OrderListScreen = () => {
 
   useEffect(() => {
     if (!userInfo) {
-      navigate(`/login?redirect=${location.pathname.substring(1)}`);
+      navigate(`/login?redirect=${location.pathname}`);
     } else if (!userInfo.isAdmin) {
       navigate("/");
     }

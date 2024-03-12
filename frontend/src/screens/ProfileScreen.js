@@ -36,7 +36,7 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     if (!userInfo) {
-      navigate(`/login?redirect=${location.pathname.substring(1)}`);
+      navigate(`/login?redirect=${location.pathname}`);
     } else {
       if (!user || !user.firstName || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });

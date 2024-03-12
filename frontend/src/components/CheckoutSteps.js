@@ -4,10 +4,10 @@ import { Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 export const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
-  const location = useLocation().pathname;
+  const location = useLocation();
   const path = {
     pathname: "/login",
-    search: `redirect=${location.substring(1)}`,
+    search: `redirect=${location.pathname}`,
   };
 
   return (

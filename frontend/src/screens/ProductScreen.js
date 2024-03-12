@@ -288,11 +288,7 @@ function ProductScreen() {
               ) : (
                 <Message variant="info">
                   Please{" "}
-                  <Link
-                    to={`/login?redirect=${location.pathname.substring(1)}`}
-                  >
-                    Login
-                  </Link>
+                  <Link to={`/login?redirect=${location.pathname}`}>Login</Link>
                 </Message>
               )}
             </Col>
