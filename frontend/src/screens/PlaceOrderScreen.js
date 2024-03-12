@@ -34,19 +34,18 @@ const PlaceOrderScreen = () => {
     Number(cart.taxPrice)
   ).toFixed(2);
 
+  if (success) {
+    navigate(`/order/${order.id}`);
+    dispatch({ type: ORDER_CREATE_RESET });
+  }
+
   useEffect(() => {
     if (!userInfo) {
       navigate(`/login?redirect=${location.pathname}`);
-    } else if (cartItems.length === 0) {
-      navigate(`/cart`);
     } else if (!shippingAddress.address) {
       navigate("/shipping");
     } else if (!cart.paymentMethod) {
       navigate("/payment");
-    }
-    if (success) {
-      navigate(`/order/${order.id}`);
-      dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [
     userInfo,
@@ -55,7 +54,7 @@ const PlaceOrderScreen = () => {
     navigate,
     cart.paymentMethod,
     order,
-    cartItems,
+    cartItems.length,
     location,
     shippingAddress,
   ]);
