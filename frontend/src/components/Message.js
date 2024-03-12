@@ -1,8 +1,13 @@
 import React from "react";
 import { Alert } from "react-bootstrap";
-export const Message = ({ variant, children }) => {
+export const Message = ({
+  variant,
+  children,
+  dismissible = false,
+  onClose = false,
+}) => {
   return (
-    <Alert className="py-2 px-3" variant={variant}>
+    <Alert dismissible={dismissible} variant={variant} onClose={onClose}>
       {children}
     </Alert>
   );

@@ -50,10 +50,14 @@ class ReviewCreateView(APIView):
 
         request.data.update({"product": pk})
         serializer = self.serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.validated_data["user"] = user
-
-        serializer.save()
-        product.update_product_rating_based_on_reviews()
-        
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if serializer.is_valid():
+            serializer.save(user=user)
+            product.update_product_rating_based_on_reviews()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        error_response = "".join(
+            [
+                f"{error}: {' '.join(message)}"
+                for error, message in serializer.errors.items()
+            ]
+        )
+        return Response({"detail": error_response}, status=status.HTTP_400_BAD_REQUEST)

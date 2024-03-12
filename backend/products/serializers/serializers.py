@@ -39,3 +39,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         if 0 < value <= 5:
             return value
         raise serializers.ValidationError("rating must be an integer between 1 to 5.")
+
+    def save(self, **kwargs):
+        user = kwargs.get("user")
+        if not self.validated_data.get("name"):
+            self.validated_data["name"] = f"{user.first_name} {user.last_name}"
+        return super().save(**kwargs)

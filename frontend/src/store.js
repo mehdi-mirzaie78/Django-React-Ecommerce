@@ -9,6 +9,7 @@ import {
   productAdminDeleteReducer,
   productAdminCreateReducer,
   productAdminUpdateReducer,
+  productReviewCreateReducer,
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -45,6 +46,7 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,
+  productReviewCreate: productReviewCreateReducer,
   // Admin reducers
   userAdminDetails: userAdminDetailsReducer,
   userAdminUpdate: userAdminUpdateReducer,

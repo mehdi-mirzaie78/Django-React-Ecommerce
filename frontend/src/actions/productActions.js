@@ -21,6 +21,9 @@ import {
   PRODUCT_ADMIN_UPDATE_REQUEST,
   PRODUCT_ADMIN_UPDATE_SUCCESS,
   PRODUCT_ADMIN_UPDATE_FAIL,
+  PRODUCT_CREATE_REVIEW_REQUEST,
+  PRODUCT_CREATE_REVIEW_SUCCESS,
+  PRODUCT_CREATE_REVIEW_FAIL,
 } from "../constants/productConstants";
 
 export const listProducts = () => async (dispatch) => {
@@ -54,6 +57,39 @@ export const detailsProduct = (id) => async (dispatch) => {
     });
   }
 };
+
+export const createProductReview =
+  (productId, review) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: PRODUCT_CREATE_REVIEW_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `/api/products/${productId}/reviews/`,
+        review,
+        config
+      );
+      dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_CREATE_REVIEW_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
 
 export const getProductAdminList = () => async (dispatch, getState) => {
   try {
