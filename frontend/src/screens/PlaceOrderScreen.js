@@ -48,7 +48,17 @@ const PlaceOrderScreen = () => {
       navigate(`/order/${order.id}`);
       dispatch({ type: ORDER_CREATE_RESET });
     }
-  }, [dispatch, success, navigate, cart.paymentMethod, order]);
+  }, [
+    userInfo,
+    dispatch,
+    success,
+    navigate,
+    cart.paymentMethod,
+    order,
+    cartItems,
+    location,
+    shippingAddress,
+  ]);
 
   const placeOrder = () => {
     dispatch(

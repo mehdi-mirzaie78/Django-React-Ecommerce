@@ -9,10 +9,7 @@ import {
   getUserAdminDetails,
   updateUserAdmin,
 } from "../../actions/userActions";
-import {
-  USER_ADMIN_UPDATE_RESET,
-  USER_DETAILS_RESET,
-} from "../../constants/userConstants";
+import { USER_ADMIN_UPDATE_RESET } from "../../constants/userConstants";
 
 const UserEditScreen = () => {
   const { id } = useParams();
