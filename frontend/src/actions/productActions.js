@@ -26,21 +26,27 @@ import {
   PRODUCT_CREATE_REVIEW_FAIL,
 } from "../constants/productConstants";
 
-export const listProducts = () => async (dispatch) => {
-  try {
-    dispatch({ type: PRODUCT_LIST_REQUEST });
-    const { data } = await axios.get("/api/products/");
-    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_LIST_FAIL,
-      payload:
-        error.response && error.response.data.error.detail
-          ? error.response.data.error.detail
-          : error.message,
-    });
-  }
-};
+export const listProducts =
+  (search = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_REQUEST });
+      let url = `/api/products/`;
+      if (search !== "") {
+        url = url + `${search}`;
+      }
+      const { data } = await axios.get(url);
+      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.error.detail
+            ? error.response.data.error.detail
+            : error.message,
+      });
+    }
+  };
 
 export const detailsProduct = (id) => async (dispatch) => {
   try {

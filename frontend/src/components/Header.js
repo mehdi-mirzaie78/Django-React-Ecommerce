@@ -4,6 +4,8 @@ import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { logout } from "../actions/userActions";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar";
+
 function Header() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -27,7 +29,12 @@ function Header() {
             <Navbar.Brand>TechnoMark</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
+          <Navbar.Collapse
+            id="navbarScroll"
+            className="justify-content-between"
+          >
+            <SearchBar />
+
             <Nav
               className="mr-auto my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
