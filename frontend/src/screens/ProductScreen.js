@@ -91,7 +91,11 @@ function ProductScreen() {
                 <ListGroup.Item>
                   <Rating
                     value={product.rating}
-                    text={`${product.numReviews} reviews`}
+                    text={
+                      product.numReviews === 1
+                        ? `${product.numReviews} review`
+                        : `${product.numReviews} reviews`
+                    }
                     color={"#f8e825"}
                   />
                 </ListGroup.Item>
@@ -176,7 +180,7 @@ function ProductScreen() {
                 style={{
                   backgroundImage: "none",
                   overflow: "auto",
-                  maxHeight: "350px",
+                  maxHeight: "320px",
                 }}
               >
                 {product.reviews.map((review) => (

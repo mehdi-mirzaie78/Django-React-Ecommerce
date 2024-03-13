@@ -19,7 +19,11 @@ function Product({ product }) {
           <div className="my-1">
             <Rating
               value={product.rating}
-              text={`${product.numReviews} reviews`}
+              text={
+                product.numReviews === 1
+                  ? `${product.numReviews} review`
+                  : `${product.numReviews} reviews`
+              }
               color={"#f8e825"} // yellow color for stars
             />
           </div>
