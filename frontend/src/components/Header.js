@@ -33,7 +33,7 @@ function Header() {
             id="navbarScroll"
             className="justify-content-between"
           >
-            <SearchBar />
+            <SearchBar pathname="/" />
 
             <Nav
               className="mr-auto my-2 my-lg-0"

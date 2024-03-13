@@ -98,33 +98,39 @@ export const createProductReview =
     }
   };
 
-export const getProductAdminList = () => async (dispatch, getState) => {
-  try {
-    dispatch({ type: PRODUCT_ADMIN_LIST_REQUEST });
+export const getProductAdminList =
+  (search = "") =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: PRODUCT_ADMIN_LIST_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.get("/api/management/product/list/", config);
-    dispatch({ type: PRODUCT_ADMIN_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_ADMIN_LIST_FAIL,
-      payload:
-        error.response && error.response.data.error.detail
-          ? error.response.data.error.detail
-          : error.message,
-    });
-  }
-};
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      let url = `/api/management/product/list/`;
+      if (search !== "") {
+        url = url + `${search}`;
+      }
+      console.log(url);
+      const { data } = await axios.get(url, config);
+      dispatch({ type: PRODUCT_ADMIN_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_ADMIN_LIST_FAIL,
+        payload:
+          error.response && error.response.data.error.detail
+            ? error.response.data.error.detail
+            : error.message,
+      });
+    }
+  };
 
 export const getProductAdminDetails = (id) => async (dispatch, getState) => {
   try {

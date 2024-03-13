@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const SearchBar = () => {
+const SearchBar = ({ pathname, size = "sm" }) => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -10,7 +10,7 @@ const SearchBar = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (search) {
-      navigate(`/?search=${search}`);
+      navigate(`${pathname}?search=${search}&page=1`);
     } else {
       navigate(location.pathname);
     }
@@ -19,7 +19,7 @@ const SearchBar = () => {
   return (
     <Form onSubmit={submitHandler} className="d-flex mx-auto input-group w-50">
       <Form.Control
-        size="sm"
+        size={size}
         type="text"
         placeholder="Search"
         value={search}
