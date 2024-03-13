@@ -1,3 +1,5 @@
+from django.db.models import Q
+from django.core.paginator import Paginator
 from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -5,17 +7,22 @@ from rest_framework import status
 from rest_framework.exceptions import NotFound
 from ..models import Product
 from ..serializers import ProductAdminSerializer
+from ..mixins import ProductListMixin
 
 
-class ProductAdminListView(APIView):
+class ProductAdminListView(APIView, ProductListMixin):
     permission_classes = [IsAdminUser]
     queryset = Product.objects.all()
     serializer = ProductAdminSerializer
 
     def get(self, request):
-        queryset = self.queryset.all()
-        serializer = self.serializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        self._fiter_queryset_by_search_param(request)
+        products = self._paginate(request, 10)
+        serializer = self.serializer(products, many=True)
+        return Response(
+            {"products": serializer.data, "page": self.page, "pages": self.last_page},
+            status=status.HTTP_200_OK,
+        )
 
     def post(self, request):
         serializer = self.serializer(data=request.data)

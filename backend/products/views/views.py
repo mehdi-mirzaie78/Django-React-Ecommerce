@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, QuerySet
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,19 +10,21 @@ from accounts.models import User
 from ..models import Product
 from ..exceptions import ProductAlreadyReviewed
 from ..serializers import ProductSerializer, ReviewSerializer
+from ..mixins import ProductListMixin
 
 
-class ProductListView(APIView):
+class ProductListView(APIView, ProductListMixin):
+    queryset = Product.objects.all()
+
     def get(self, request):
-        queryset = Product.objects.all()
-        if search := request.query_params.get("search"):
-            queryset = queryset.filter(
-                Q(name__icontains=search)
-                | Q(brand__icontains=search)
-                | Q(category__icontains=search)
-            )
-        serializer = ProductSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        self._fiter_queryset_by_search_param(request)
+        products = self._paginate(request, 4)
+        serializer = ProductSerializer(products, many=True)
+
+        return Response(
+            {"products": serializer.data, "page": self.page, "pages": self.last_page},
+            status=status.HTTP_200_OK,
+        )
 
 
 class ProductDetailView(APIView):
