@@ -248,7 +248,9 @@ function ProductScreen() {
                               value={rating}
                               onChange={(e) => setRating(e.target.value)}
                             >
-                              <option value="">Select...</option>
+                              <option key="select-option" value="">
+                                Select...
+                              </option>
                               {[
                                 [1, "Poor"],
                                 [2, "Fair"],
@@ -257,6 +259,7 @@ function ProductScreen() {
                                 [5, "Excellent"],
                               ].map((opt) => (
                                 <option
+                                  key={opt[0]}
                                   value={opt[0]}
                                 >{`${opt[0]} - ${opt[1]}`}</option>
                               ))}

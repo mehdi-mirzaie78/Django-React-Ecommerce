@@ -1,0 +1,60 @@
+services:
+
+  db:
+    container_name: db
+    image: postgres:15.4
+    env_file:
+      - ./backend/env/postgres.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - static:/app/static
+      - static:/app/staticfiles
+      - images:/app/static/images
+      - ./backend:/app
+    env_file:
+      - ./backend/env/backend.env
+    depends_on:
+      - db
+    restart: always
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - frontend:/app/build
+    # restart: always
+  
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    volumes:
+      - static:/static
+      - images:/static/images
+      - frontend:/var/www/frontend
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "80:80"
+    restart: always
+
+volumes:
+  postgres_data:
+  static:
+  images:
+  frontend:
+
+networks:
+  main_network:
+    driver: bridge
