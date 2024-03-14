@@ -27,6 +27,13 @@ class ProductListView(APIView, ProductListMixin):
         )
 
 
+class ProductTopRatedListView(APIView):
+    def get(self, request):
+        queryset = Product.objects.filter(rating__gte=4).order_by("-rating")[:5]
+        serializer = ProductSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class ProductDetailView(APIView):
     def get(self, request, pk):
         product = get_object_or_404(Product, pk=pk)

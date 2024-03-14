@@ -7,6 +7,7 @@ import { listProducts } from "../actions/productActions";
 import { Loader } from "../components/Loader";
 import { Message } from "../components/Message";
 import { useLocation } from "react-router-dom";
+import ProductCarousel from "../components/ProductCarousel";
 
 function HomeScreen() {
   const dispatch = useDispatch();
@@ -22,7 +23,8 @@ function HomeScreen() {
 
   return (
     <div>
-      <h1 className="text-center">Latest Products</h1>
+      {!search && <ProductCarousel />}
+      <h1 className="mb-0">Latest Products</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -35,7 +37,7 @@ function HomeScreen() {
                 <Product product={product} />
               </Col>
             ))}
-          </Row>  
+          </Row>
           <hr></hr>
 
           <Paginator page={page} pages={pages} search={search} />
