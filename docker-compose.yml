@@ -16,8 +16,6 @@ services:
   backend:
     container_name: backend
     build: ./backend
-    ports:
-      - "8000:8000"
     networks:
       - main_network
     volumes:

@@ -20,6 +20,9 @@ class Product(models.Model):
     count_in_stock = models.IntegerField(null=True, blank=True, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ("-created_at",)
+
     def __str__(self):
         return self.name
 
