@@ -7,6 +7,8 @@ services:
       - ./backend/env/postgres.env
     ports:
       - "5432:5432"
+    networks:
+      - main_network
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
@@ -16,10 +18,9 @@ services:
     build: ./backend
     ports:
       - "8000:8000"
+    networks:
+      - main_network
     volumes:
-      - ./backend:/app
-      - ./backend/static:/app/static
-      - ./backend/static/images:/app/static/images
       - static:/app/static
       - static:/app/staticfiles
       - images:/app/static/images
@@ -32,14 +33,19 @@ services:
   frontend:
     container_name: frontend
     build: ./frontend
+    networks:
+      - main_network
     volumes:
-      - ./frontend:/app
       - frontend:/app/build
     # restart: always
-  
+
   nginx:
     container_name: nginx
     build: ./nginx
+    ports:
+      - "80:80"
+    networks:
+      - main_network
     volumes:
       - static:/static
       - images:/static/images
@@ -47,8 +53,6 @@ services:
     depends_on:
       - backend
       - frontend
-    ports:
-      - "80:80"
     restart: always
 
 volumes:
