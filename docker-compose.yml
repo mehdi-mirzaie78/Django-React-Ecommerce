@@ -17,10 +17,12 @@ services:
     ports:
       - "8000:8000"
     volumes:
+      - ./backend:/app
+      - ./backend/static:/app/static
+      - ./backend/static/images:/app/static/images
       - static:/app/static
       - static:/app/staticfiles
       - images:/app/static/images
-      - ./backend:/app
     env_file:
       - ./backend/env/backend.env
     depends_on:

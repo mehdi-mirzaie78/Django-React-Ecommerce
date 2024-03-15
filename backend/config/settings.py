@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-c2_#ss2!=c9axi))5c-j4uhp+n4iqdyu!=g9fknqxw6-7yu)-#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "backend"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -136,13 +136,13 @@ DATABASES = {
     }
 }
 
-# if DEBUG:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.sqlite3",
-#             "NAME": BASE_DIR / "db/db.sqlite3",
-#         }
-#     }
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db/db.sqlite3",
+        }
+    }
 
 
 # Password validation
