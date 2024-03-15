@@ -38,6 +38,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
       },
     };
@@ -77,7 +78,12 @@ export const register =
   (firstName, lastName, email, password) => async (dispatch) => {
     try {
       dispatch({ type: USER_REGISTER_REQUEST });
-      const config = { headers: { "Content-Type": "application/json" } };
+      const config = {
+        headers: {
+          "X-Requested-From-React": true,
+          "Content-Type": "application/json",
+        },
+      };
 
       const { data } = await axios.post(
         "api/users/register/",
@@ -122,6 +128,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -153,6 +160,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -199,6 +207,7 @@ export const getUserList = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -228,6 +237,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -257,6 +267,7 @@ export const getUserAdminDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -288,6 +299,7 @@ export const updateUserAdmin = (user) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },

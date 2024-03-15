@@ -34,6 +34,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -70,6 +71,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -101,6 +103,7 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -137,6 +140,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -169,6 +173,7 @@ export const getOrderAdminList = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -201,6 +206,7 @@ export const getOrderAdminDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -233,6 +239,7 @@ export const updateOrderAdmin = (order) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },

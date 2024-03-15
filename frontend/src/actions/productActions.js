@@ -38,7 +38,9 @@ export const listProducts =
       if (search !== "") {
         url = url + `${search}`;
       }
-      const { data } = await axios.get(url);
+
+      const config = { headers: { "X-Requested-From-React": true } };
+      const { data } = await axios.get(url, config);
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -55,7 +57,8 @@ export const listTopProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_TOP_RATED_REQUEST });
     let url = `/api/products/top-rated/`;
-    const { data } = await axios.get(url);
+    const config = { headers: { "X-Requested-From-React": true } };
+    const { data } = await axios.get(url, config);
     dispatch({ type: PRODUCT_TOP_RATED_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -71,7 +74,8 @@ export const listTopProducts = () => async (dispatch) => {
 export const detailsProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/products/${id}`);
+    const config = { headers: { "X-Requested-From-React": true } };
+    const { data } = await axios.get(`/api/products/${id}`, config);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -95,6 +99,7 @@ export const createProductReview =
 
       const config = {
         headers: {
+          "X-Requested-From-React": true,
           "Content-Type": "application/json",
           Authorization: `Bearer ${userInfo.token}`,
         },
@@ -130,6 +135,7 @@ export const getProductAdminList =
 
       const config = {
         headers: {
+          "X-Requested-From-React": true,
           "Content-Type": "application/json",
           Authorization: `Bearer ${userInfo.token}`,
         },
@@ -162,6 +168,7 @@ export const getProductAdminDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -190,6 +197,7 @@ export const deleteProductAdmin = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -221,6 +229,7 @@ export const createProductAdmin = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -253,6 +262,7 @@ export const updateProductAdmin = (product) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        "X-Requested-From-React": true,
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${userInfo.token}`,
       },
